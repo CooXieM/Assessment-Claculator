@@ -33,7 +33,7 @@ def choice_checker(question):
             elif response == var_item[0]:
                 return var_item
 
-        print("Please enter either Yes or No: \n")
+        print("Please enter a valid answer: \n")
 
 
 # This checks the user enters a number
@@ -51,7 +51,7 @@ def num_check(question):
                 print("Please enter a number bigger than 0")
 
         except ValueError:
-            print("Please enter an integer")
+            print("Please enter a whole Number")
 
 
 # Date time at the start -
@@ -76,11 +76,12 @@ if want_instructions == 'yes':
 # Error message
 error = "Please Try Again"
 
-# Dictionary - - - - - - - - - - - - -
+# Dictionary - - - Setting up the layout and what's inside the pandas
 shapes = []
 area_panda = []
 perimeter_panda = []
 
+# Print out the pandas in the format given
 calculator_dict = {
     "Shape:": shapes,
     "Area:": area_panda,
@@ -95,12 +96,16 @@ while True:
     shape_c1 = choice_checker("\nPlease Pick a Valid Shape... (Square, Triangle, Rectangle or Circle)\n"
                               "Else type 'xxx' to quit.\n").lower()
 
+    # Exit code
+    if shape_c1 == "xxx":
+        break
     # Gets Dimensions for the Square
-    if shape_c1 == "square" or shape_c1 == "s":
+    elif shape_c1 == "square":
         side_length = num_check("Side Length: ")
+        # Math to find the area and perimeter
         perimeter = side_length * 4
         area = side_length ** 2
-        print("Perimeter is {:.2f}. Area is {:.2f}".format(area, perimeter))
+        print("Perimeter is {:.2f}. Area is {:.2f}".format(perimeter, area))
 
         # Gets Dimensions for the Triangle
         # figure out how to ask the user if they want area and perimeter
@@ -108,34 +113,32 @@ while True:
         base = num_check("Side 1 Length: ")
         side = num_check("Side 2 Length: ")
         other_side = num_check("Side 3 Length: ")
+        # Do the math to find the area and perimeter
         perimeter = base + side + other_side
         hp = perimeter / 2
         herons_law = math.sqrt(hp * (hp - base) * (hp - side) * (hp - other_side))
         area = herons_law
-        print("Perimeter is {:.2f}. Area is {:.2f}".format(area, perimeter))
+        print("Perimeter is {:.2f}. Area is {:.2f}".format(perimeter, area))
 
     # Gets Dimensions for the Circle
     elif shape_c1 == "circle":
         radius = num_check("Radius: ")
-        # add pi
-        perimeter = math.pi * math.sqrt(radius)
-        area = 2 * math.pi * radius
-        print("Perimeter is {:.2f}. Area is {:.2f}".format(area, perimeter))
+        # add pi and do the math for perimeter and area
+        squared_radius = radius ** 2
+        area = math.pi * squared_radius
+        perimeter = 2 * math.pi * radius
+        print("Perimeter is {:.2f}. Area is {:.2f}".format(perimeter, area))
 
     # Gets Dimensions for the Rectangle
-    elif shape_c1 == "rectangle":
+    else:
         base = num_check("Base Length: ")
         length = num_check("Height Length: ")
+        # Does the math to find the area and perimeter
         perimeter = base * 2 + length * 2
         area = base * length
-        print("Perimeter is {:.2f}. Area is {:.2f}".format(area, perimeter))
+        print("Perimeter is {:.2f}. Area is {:.2f}".format(perimeter, area))
 
-    elif shape_c1 == "xxx":
-        break
-    else:
-        print(error)
-
-    # Pandas ----
+    # appending my shape, perimeter, area so i can print Pandas
     shapes.append(shape_c1)
     area_panda.append(area)
     perimeter_panda.append(perimeter)
